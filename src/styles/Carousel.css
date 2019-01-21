@@ -1,0 +1,83 @@
+.carouselBox {
+    max-width: 100%;
+    position: relative;
+    margin: auto;
+    background-color: #333333;
+
+}
+
+.carouselContent{
+    text-align: center;
+    display: table;
+    max-height: 25%;
+    margin-left: 38%;
+}
+
+.carouselContent img{
+    height: 500px;
+}
+
+.dotBox{
+    text-align: center;
+}
+
+.dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+    background-color: #717171;
+}
+
+
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
+
+@keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
+
+@media only screen and (max-width: 425px)  {
+    .carouselContent{
+        text-align: center;
+        margin: 0px;
+    }
+}
+
+@media only screen and (min-width: 768px)  {
+    .carouselContent{
+        text-align: center;
+        margin-left: 29%;
+    }
+}
+
+@media only screen and (min-width: 1024px)  {
+    .carouselContent{
+        text-align: center;
+        margin-left: 37%;
+    }
+}
+
+@media only screen and (min-width: 1440px)  {
+    .carouselContent{
+        text-align: center;
+        margin-left: 38%;
+    }
+}

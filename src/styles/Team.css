@@ -1,0 +1,28 @@
+
+.pageHeader{
+    text-align: center;
+}
+
+.memberGallery{
+    display: flex;
+    text-align: center;
+    margin-left: 180px;
+}
+
+.galleryItem img{
+    padding: 10px;
+    border-radius: 25px;
+    opacity: 1;
+    transition: .5s ease;
+}
+
+.galleryItem img:hover {
+    opacity: 0.8;
+}
+.memberName {
+    background-color: #aca9af;
+    color: white;
+    margin: 5px;
+    font-size: 16px;
+    padding: 16px 32px;
+}
