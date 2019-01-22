@@ -29,26 +29,26 @@ class Carousel extends Component {
 
     handleDot = (value, e) => {
 
-        this.refs.zero.classList.remove('active')
-        this.refs.one.classList.remove('active')
-        this.refs.two.classList.remove('active')
-        this.refs.three.classList.remove('active')
+        this.refs.zero.classList.remove('dot-active')
+        this.refs.one.classList.remove('dot-active')
+        this.refs.two.classList.remove('dot-active')
+        this.refs.three.classList.remove('dot-active')
 
         this.setState({
             currentImage: parseInt(value)
         }, () => {
             switch (value){
                 case '0':
-                    this.refs.zero.classList.add('active')
+                    this.refs.zero.classList.add('dot-active')
                     break;
                 case '1':
-                    this.refs.one.classList.add('active')
+                    this.refs.one.classList.add('dot-active')
                     break;
                 case '2':
-                    this.refs.two.classList.add('active')
+                    this.refs.two.classList.add('dot-active')
                     break;
                 case '3':
-                    this.refs.three.classList.add('active')
+                    this.refs.three.classList.add('dot-active')
                     break;
                 default:
                     break;
@@ -64,7 +64,7 @@ class Carousel extends Component {
                                                            alt=""/></div> {/*the image box*/}
 
                 <div className="dotBox">
-                    <span className="dot active" ref="zero" onClick={(e) => this.handleDot('0')}></span>
+                    <span className="dot dot-dot-active" ref="zero" onClick={(e) => this.handleDot('0')}></span>
                     <span className="dot" ref="one" onClick={(e) => this.handleDot('1')}></span>
                     <span className="dot" ref="two" onClick={(e) => this.handleDot('2')}></span>
                     <span className="dot" ref="three" onClick={(e) => this.handleDot('3')}></span>

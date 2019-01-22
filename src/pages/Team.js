@@ -31,8 +31,8 @@ class Team extends Component {
                 </div>
                 <div className="memberGallery">
                     {
-                        this.state.array.map(item => {
-                            return <div className="galleryItem">
+                        this.state.array.map((item,i) => {
+                            return <div className="galleryItem" key={i}>
                                 <img src={item.Poster} alt={item.Title}/>
 
                                 <div className="memberName">{item.Title}</div>
