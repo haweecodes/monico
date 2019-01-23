@@ -1,26 +1,20 @@
 import React, {Component} from 'react';
 import '../styles/Team.css';
 import Carousel from '../components/Carousel'
+import axios from 'axios'
 
 class Team extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            array: [
-                {
-                    "Title": "Avatar",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTYwOTEwNjAzMl5BMl5BanBnXkFtZTcwODc5MTUwMw@@._V1_SX300.jpg",
-                },
-                {
-                    "Title": "I Am Legend",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTU4NzMyNDk1OV5BMl5BanBnXkFtZTcwOTEwMzU1MQ@@._V1_SX300.jpg",
-                },
-                {
-                    "Title": "300",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMjAzNTkzNjcxNl5BMl5BanBnXkFtZTYwNDA4NjE3._V1_SX300.jpg",
-                }
-            ]
+            array: []
         }
+        axios.get('https://jsonplaceholder.typicode.com/photos/?albumId=100').then((response) => {
+            let tempArray = response.data.splice(47, 50)
+            this.setState({
+                array: tempArray
+            },()=>{})
+        })
     }
 
     render() {
@@ -33,9 +27,9 @@ class Team extends Component {
                     {
                         this.state.array.map((item,i) => {
                             return <div className="galleryItem" key={i}>
-                                <img src={item.Poster} alt={item.Title}/>
+                                <img src={item.thumbnailUrl} alt={item.title}/>
 
-                                <div className="memberName">{item.Title}</div>
+                                <div className="memberName">{item.title}</div>
 
                             </div>
                         })

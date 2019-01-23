@@ -1,37 +1,89 @@
 import React, {Component} from 'react';
 import '../styles/ProductList.css';
-
+import axios from 'axios'
 class ProductList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            array: [
-                {
-                    "Title": "Avatar",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTYwOTEwNjAzMl5BMl5BanBnXkFtZTcwODc5MTUwMw@@._V1_SX300.jpg",
-                },
-                {
-                    "Title": "I Am Legend",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTU4NzMyNDk1OV5BMl5BanBnXkFtZTcwOTEwMzU1MQ@@._V1_SX300.jpg",
-                },
-                {
-                    "Title": "300",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMjAzNTkzNjcxNl5BMl5BanBnXkFtZTYwNDA4NjE3._V1_SX300.jpg",
-                },
-                {
-                    "Title": "Avatar",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTYwOTEwNjAzMl5BMl5BanBnXkFtZTcwODc5MTUwMw@@._V1_SX300.jpg",
-                },
-                {
-                    "Title": "I Am Legend",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMTU4NzMyNDk1OV5BMl5BanBnXkFtZTcwOTEwMzU1MQ@@._V1_SX300.jpg",
-                },
-                {
-                    "Title": "300",
-                    "Poster": "http://ia.media-imdb.com/images/M/MV5BMjAzNTkzNjcxNl5BMl5BanBnXkFtZTYwNDA4NjE3._V1_SX300.jpg",
-                }
-            ]
+            array: [],
+            searchValue: '',
+            pageNumber: 1
         }
+        axios.get('https://jsonplaceholder.typicode.com/photos/?albumId=1').then((response) => {
+            let tempArray = response.data
+            this.setState({
+                array: tempArray
+            }, () => {
+            })
+        })
+    }
+
+    pagination=(page)=>{
+        console.log(page)
+        if(page === 0 || page === 1) {
+            this.setState({
+                pageNumber: this.state.pageNumber + 1
+            },()=>{
+                axios.get('https://jsonplaceholder.typicode.com/photos/?albumId=' + this.state.pageNumber).then((response) => {
+                    let tempArray = response.data
+                    this.setState({
+                        array: tempArray
+                    }, () => {
+                    })
+                })
+            })
+        } else if(page===2){
+            this.setState({
+                pageNumber: this.state.pageNumber - 1
+            },()=>{
+                console.log(this.state.pageNumber)
+                if(this.state.pageNumber > 0) {
+                    axios.get('https://jsonplaceholder.typicode.com/photos/?albumId=' + this.state.pageNumber).then((response) => {
+                        let tempArray = response.data
+                        this.setState({
+                            array: tempArray
+                        }, () => {
+                        })
+                    })
+                }{
+                    this.setState({
+                        pageNumber: 1
+                    },()=>{})
+                }
+            })
+        }
+    }
+
+    handleSearch = (e) => {
+        let value = e.target.value
+        this.setState({
+            searchValue: value
+        })
+        if(e.key === 'Enter'){
+            axios.get('https://jsonplaceholder.typicode.com/photos/?title='+value).then((response) => {
+                let tempArray = response.data
+                this.setState({
+                    array: tempArray
+                },()=>{})
+            })
+        } else{
+            axios.get('https://jsonplaceholder.typicode.com/photos').then((response) => {
+                let tempArray = response.data.splice(4990, 5000)
+                this.setState({
+                    array: tempArray
+                },()=>{})
+            })
+        }
+    }
+    sortByPrice = (e) =>{
+        let price = e.target.value
+        axios.get('https://jsonplaceholder.typicode.com/photos/?albumId=' + price).then((response) => {
+            let tempArray = response.data
+            this.setState({
+                array: tempArray
+            }, () => {
+            })
+        })
     }
 
     render() {
@@ -41,14 +93,13 @@ class ProductList extends Component {
                     <li>
                         <h2>Product</h2>
                     </li>
-
                     <li className="searchBar">
-                        <select id="sel1" className="textBox">
+                        <select id="sel1" className="textBox" onChange={this.sortByPrice}>
                             <option>Sort by Price</option>
-                            <option>100-200</option>
-                            <option>200-500</option>
-                            <option>500-1000</option>
-                            <option>1000+</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
                         </select>
                     </li>
                     <li className="searchBar">
@@ -61,34 +112,35 @@ class ProductList extends Component {
                         </select>
                     </li>
                     <li className="searchBar">
-                        <input type="text" placeholder="Search By Name" className="textBox"/>
+                        <input type="text" placeholder="Search By Name" className="textBox" onKeyPress={this.handleSearch}/>
                     </li>
                 </ul>
 
-
-                <div className="row">
+                <table>
+                    <tbody>
+                    <tr>
                     {
                         this.state.array.map((item, i) => {
-                            return <div className="card">
-                                <img src={item.Poster} alt={item.Title}/>
+                            return <td className="card" key={i}>
+                                <img src={item.thumbnailUrl} alt={item.title}/>
                                 <br/>
-                                <div style={{backgroundColor: '#555', color: '#fff'}}>
-                                    <strong>{item.Title}</strong>
+                                <div style={{marginTop: '10px'}}>
+                                    <p>{item.title}</p>
                                     <br/>
-                                    <strong>{item.Title}</strong>
+                                    <strong>Price: ${item.id}</strong>
                                 </div>
-
-                            </div>
+                            </td>
                         })
                     }
-
-                </div>
+                    </tr>
+                    </tbody>
+                </table>
                 <div style={{textAlign:'center'}}>
-                    <button type="button" aria-label="Left Align" className="pagination">
+                    <button type="button" aria-label="Left Align" className="pagination" onClick={(e)=>this.pagination(2)}>
                        Previous
                     </button>
-                    <button type="button" aria-label="Left Align" className="pagination">
-                        Next >>
+                    <button type="button" aria-label="Left Align" className="pagination" onClick={(e)=>this.pagination(1)}>
+                        Next
                     </button>
                 </div>
             </div>
