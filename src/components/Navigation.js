@@ -4,7 +4,6 @@ import {Link} from "react-router-dom";
 
 class Navigation extends Component {
 
-
     handlePage = (value, e) => {
         this.refs.home.classList.remove('active')
         this.refs.team.classList.remove('active')

@@ -3,14 +3,14 @@ import './App.css';
 import Navigation from './components/Navigation'
 import Home from './pages/Home'
 import Team from './pages/Team'
-import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+
+import {HashRouter as Router, Route, Link} from "react-router-dom";
 
 class App extends Component {
     render() {
         return (
             <Router>
                 <div className="App">
-
                     <Navigation></Navigation>
                     <div className="Container">
                         <Route exact  path="/" component={Home}></Route>

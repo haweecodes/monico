@@ -13,7 +13,8 @@ class Team extends Component {
             let tempArray = response.data.splice(47, 50)
             this.setState({
                 array: tempArray
-            },()=>{})
+            }, () => {
+            })
         })
     }
 
@@ -23,19 +24,26 @@ class Team extends Component {
                 <div className="pageHeader">
                     <h1>Our Team Member</h1>
                 </div>
-                <div className="memberGallery">
-                    {
-                        this.state.array.map((item,i) => {
-                            return <div className="galleryItem" key={i}>
-                                <img src={item.thumbnailUrl} alt={item.title}/>
 
-                                <div className="memberName">{item.title}</div>
+                <table>
+                    <tbody>
+                        <tr className="memberGallery">
 
-                            </div>
-                        })
-                    }
+                            {
+                                this.state.array.map((item, i) => {
+                                    return <td className="galleryItem" key={i}>
+                                        <img src={item.thumbnailUrl} alt={item.title}/>
 
-                </div>
+                                        <div className="memberName">{item.title}</div>
+
+                                    </td>
+                                })
+                            }
+
+                        </tr>
+                    </tbody>
+                </table>
+
 
             </div>
         );
