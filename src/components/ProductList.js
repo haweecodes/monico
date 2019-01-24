@@ -75,10 +75,28 @@ class ProductList extends Component {
             })
         }
     }
-    sortByPrice = (e) =>{
+    sortByCategory = (e) =>{
         let price = e.target.value
         axios.get('https://jsonplaceholder.typicode.com/photos/?albumId=' + price).then((response) => {
             let tempArray = response.data
+            this.setState({
+                array: tempArray
+            }, () => {
+            })
+        })
+    }
+    sortByPrice = (e) =>{
+        this.setState({
+            array: []
+        }, () => {
+        })
+        let price = e.target.value.split('-')
+        console.log(price)
+        axios.get('https://jsonplaceholder.typicode.com/photos').then((response) => {
+            let tempArray = response.data.filter((value)=>{
+                return value.id >= price[0] && value.id <= price[1]
+            })
+            console.log(tempArray)
             this.setState({
                 array: tempArray
             }, () => {
@@ -95,22 +113,24 @@ class ProductList extends Component {
                     </li>
                     <li className="searchBar">
                         <select id="sel1" className="textBox" onChange={this.sortByPrice}>
-                            <option>Sort by Price</option>
+                            <option>Select Price</option>
+                            <option value="1-1000">1-1000</option>
+                            <option value="1001-2000">1001-2000</option>
+                            <option value="2001-3000">2001-3000</option>
+                            <option value="3001-4000">3001-4000</option>
+                            <option value="4001-5000">4001-5000</option>
+                        </select>
+                    </li>
+                    <li className="searchBar">
+                        <select id="sel1" className="textBox" onChange={this.sortByCategory}>
+                            <option>Sort by Category</option>
                             <option value="10">10</option>
                             <option value="20">20</option>
                             <option value="30">30</option>
                             <option value="40">40</option>
                         </select>
                     </li>
-                    <li className="searchBar">
-                        <select id="sel1" className="textBox">
-                            <option>Select Category</option>
-                            <option>Mobile</option>
-                            <option>Laptop</option>
-                            <option>PC</option>
-                            <option>Accessories</option>
-                        </select>
-                    </li>
+
                     <li className="searchBar">
                         <input type="text" placeholder="Search By Name" className="textBox" onKeyPress={this.handleSearch}/>
                     </li>
